@@ -2,7 +2,6 @@ package net.casheh.celllevel;
 
 import net.casheh.celllevel.commands.Deposit;
 import net.casheh.celllevel.commands.Levels;
-import net.casheh.celllevel.commands.Withdraw;
 import net.casheh.celllevel.config.Config;
 import net.casheh.celllevel.db.Database;
 import net.casheh.celllevel.db.SQLite;
@@ -14,9 +13,6 @@ import net.casheh.celllevel.managers.LevelTranslator;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
-
-import javax.xml.crypto.Data;
-import java.sql.SQLException;
 
 public final class CellLevel extends JavaPlugin {
 
@@ -52,7 +48,6 @@ public final class CellLevel extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new InventoryListeners(), this);
             getServer().getPluginManager().registerEvents(new IslandEvents(), this);
             getCommand("levels").setExecutor(new Levels(this));
-            getCommand("withdrawlevels").setExecutor(new Withdraw());
             getCommand("deposit").setExecutor(new Deposit());
         }
 
