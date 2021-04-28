@@ -1,0 +1,21 @@
+messages:
+  prefix: "&b&lM&7&7&lM &8&l» &r"
+  wand-given: "&bYou have been given a beacon wand!"
+  no-permission: "&cYou do not have permission for this command."
+  no-shops: "&cYou may not use this item on chest shops."
+  not-at-island: "&cYou must be in your own cell to use this!"
+item:
+  wand-name: "&8[&b&lVALUE WAND&r&8] &r"
+  lore:
+    - '&7Instantly add a whole chest of'
+    - '&b&lBeacons &7or &7&e&lSponges'
+    - '&7 to your cell value in one click'
+menu:
+  celltop:
+    name: '&b&lM&7&lM &8&l» &rCell Top'
+    update-interval: 120 # seconds
+
+# %beacons% and %sponge% for amount placeholders
+deposit:
+  deposit-messages:
+    - '&b&lM&7&7&lM &8&l» &7You successfully deposited &b&l%beacons% &b&lBeacons &7and &e&l%sponge% &e&lSponges'

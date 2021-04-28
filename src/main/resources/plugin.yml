@@ -1,0 +1,11 @@
+name: CellLevel
+version: ${project.version}
+main: net.casheh.celllevel.CellLevel
+depend: [ FabledSkyBlock ]
+authors: [ Cashless ]
+commands:
+  deposit:
+  withdrawlevels:
+  levels:
+    aliases: [value, level]
+  givewand:
