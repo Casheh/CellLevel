@@ -124,10 +124,14 @@ public class Levels implements CommandExecutor {
                     return false;
                 }
 
-                ItemStack wand = CellLevel.inst.getCfg().getWand(50);
+                try {
+                    ItemStack wand = plugin.getCfg().getWand(Integer.parseInt(args[2]));
+                    player.getInventory().addItem(wand);
+                    player.sendMessage(plugin.getCfg().getWandGiven());
+                } catch (NumberFormatException e) {
+                    sender.sendMessage(plugin.getCfg().getPrefix() + Util.color("&cThat is not a valid number!"));
+                }
 
-                player.getInventory().addItem(wand);
-                player.sendMessage(plugin.getCfg().getWandGiven());
             }
         } else if (args[0].equalsIgnoreCase("reload")) {
             if (sender instanceof ConsoleCommandSender || sender.hasPermission("celllevel.admin")) {

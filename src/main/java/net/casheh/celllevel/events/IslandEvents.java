@@ -68,16 +68,19 @@ public class IslandEvents implements Listener {
     @EventHandler
     public void onKick(IslandKickEvent e) {
         OfflinePlayer player = e.getKicked();
-
-        try {
-            String query = "DELETE FROM players WHERE uuid=?";
-            PreparedStatement statement = CellLevel.inst.getDatabase().prepare(query);
-            statement.setString(1, player.getUniqueId().toString());
-            statement.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
+        Bukkit.getScheduler().runTaskAsynchronously(CellLevel.inst, new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String query = "DELETE FROM players WHERE uuid=?";
+                    PreparedStatement statement = CellLevel.inst.getDatabase().prepare(query);
+                    statement.setString(1, player.getUniqueId().toString());
+                    statement.executeUpdate();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 
 
