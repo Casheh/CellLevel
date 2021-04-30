@@ -2,12 +2,10 @@ package net.casheh.celllevel.commands;
 
 import me.goodandevil.skyblock.api.SkyBlockAPI;
 import me.goodandevil.skyblock.api.island.IslandManager;
-import me.goodandevil.skyblock.confirmation.Confirmation;
 import net.casheh.celllevel.CellLevel;
 import net.casheh.celllevel.inventory.LevelsMenu;
 import net.casheh.celllevel.managers.IslandUtilities;
 import net.casheh.celllevel.managers.PlayerUtilities;
-import net.casheh.celllevel.nbt.NBTEditor;
 import net.casheh.celllevel.util.Util;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -48,8 +46,18 @@ public class Levels implements CommandExecutor {
             }
 
             IslandManager manager = SkyBlockAPI.getIslandManager();
-            LevelsMenu menu = new LevelsMenu(manager.getIsland(player));
-            menu.openMenu(player);
+            Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    LevelsMenu menu = new LevelsMenu(manager.getIsland(player));
+                    Bukkit.getScheduler().runTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            menu.openMenu(player);
+                        }
+                    });
+                }
+            });
             return false;
         } else if (args[0].equalsIgnoreCase("wipe")) {
             if (sender instanceof ConsoleCommandSender) {

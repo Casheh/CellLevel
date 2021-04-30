@@ -61,8 +61,7 @@ public class CellTopMenu {
                 SkullMeta meta = (SkullMeta) skull.getItemMeta();
 
                 meta.setDisplayName(ChatColor.AQUA.toString() + ChatColor.BOLD + "CELL TOP " + (i+1));
-                List<String> lore = new ArrayList<>();
-                lore.addAll(Arrays.asList(" ",
+                List<String> lore = new ArrayList<>(Arrays.asList(" ",
                         Util.color("&8&l» &7Owner:"),
                         Util.color("&c&l  " + owner.getName()),
                         " ",
@@ -71,10 +70,14 @@ public class CellTopMenu {
                         " ",
                         Util.color("&8&l» &7Members:")));
 
-                for (UUID uuid : islandUtilities.getAllMembers()) {
-                    OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
-                    if (!player.getUniqueId().equals(island.getOwnerUUID()))
-                        lore.add(Util.color("&d&l  " + player.getName()));
+                if (islandUtilities.getAllMembers().size() > 1) {
+                    for (UUID uuid : islandUtilities.getAllMembers()) {
+                        OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
+                        if (!player.getUniqueId().equals(island.getOwnerUUID()))
+                            lore.add(Util.color("&d&l  " + player.getName()));
+                    }
+                } else {
+                    lore.add(Util.color("&d&l0"));
                 }
 
                 meta.setLore(lore);
@@ -180,5 +183,7 @@ public class CellTopMenu {
         }
         return topIslands;
     }
+
+
 
 }

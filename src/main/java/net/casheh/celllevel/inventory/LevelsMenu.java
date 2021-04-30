@@ -1,6 +1,7 @@
 package net.casheh.celllevel.inventory;
 
 import me.goodandevil.skyblock.api.island.Island;
+import net.casheh.celllevel.CellLevel;
 import net.casheh.celllevel.managers.IslandUtilities;
 import net.casheh.celllevel.util.Skull;
 import net.casheh.celllevel.util.Util;
@@ -36,8 +37,7 @@ public class LevelsMenu {
                 SkullMeta meta = (SkullMeta) skull.getItemMeta();
                 IslandUtilities islandUtilities = new IslandUtilities(this.island);
                 meta.setLore(islandUtilities.getLevelsList());
-                meta.setDisplayName(Util.color("&a&lCell Level"));
-
+                meta.setDisplayName(Util.color("&b&lCELL VALUE"));
                 skull.setItemMeta(meta);
                 this.levelsMenu.setItem(i, skull);
             }

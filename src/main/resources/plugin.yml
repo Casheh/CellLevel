@@ -5,7 +5,6 @@ depend: [ FabledSkyBlock ]
 authors: [ Cashless ]
 commands:
   deposit:
-  withdrawlevels:
   levels:
     aliases: [value, level]
   givewand:

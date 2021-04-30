@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.lang.reflect.Field;
+import java.text.NumberFormat;
 import java.util.Collections;
 import java.util.UUID;
 
@@ -81,7 +82,7 @@ public class Util {
         return count;
     }
 
-//    public static int getUsesLeft(ItemStack wand) {
-//
-//    }
+    public static String addCommas(int num) {
+        return NumberFormat.getNumberInstance().format(num);
+    }
 }

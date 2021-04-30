@@ -1,10 +1,12 @@
 package net.casheh.celllevel.events;
 
 import me.goodandevil.skyblock.api.event.island.IslandDeleteEvent;
+import me.goodandevil.skyblock.api.event.island.IslandKickEvent;
 import me.goodandevil.skyblock.api.event.player.PlayerIslandLeaveEvent;
 import net.casheh.celllevel.CellLevel;
 import net.casheh.celllevel.managers.IslandUtilities;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -22,7 +24,7 @@ public class IslandEvents implements Listener {
             @Override
             public void run() {
                 try {
-                    String query = "DELETE from players WHERE uuid=?";
+                    String query = "DELETE FROM players WHERE uuid=?";
                     PreparedStatement statement = CellLevel.inst.getDatabase().prepare(query);
                     statement.setString(1, uuid.toString());
                     statement.executeUpdate();
@@ -61,6 +63,21 @@ public class IslandEvents implements Listener {
                 }
             }
         });
+    }
+
+    @EventHandler
+    public void onKick(IslandKickEvent e) {
+        OfflinePlayer player = e.getKicked();
+
+        try {
+            String query = "DELETE FROM players WHERE uuid=?";
+            PreparedStatement statement = CellLevel.inst.getDatabase().prepare(query);
+            statement.setString(1, player.getUniqueId().toString());
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
     }
 
 

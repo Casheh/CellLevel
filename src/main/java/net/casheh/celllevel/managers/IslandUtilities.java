@@ -6,11 +6,9 @@ import net.casheh.celllevel.CellLevel;
 import net.casheh.celllevel.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -141,21 +139,66 @@ public class IslandUtilities {
     }
 
     public List<String> getLevelsList() {
-        int total = 0;
+        Set<UUID> owners = this.island.getPlayersWithRole(IslandRole.OWNER);
+        Set<UUID> operators = this.island.getPlayersWithRole(IslandRole.OPERATOR);
+        Set<UUID> members = this.island.getPlayersWithRole(IslandRole.MEMBER);
+        int totalBeacons = 0;
+        int totalSponge = 0;
+
         List<String> lore = new ArrayList<>();
         lore.add(" ");
 
-        for (UUID uuid : this.getAllMembers()) {
-            OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
-            PlayerUtilities utilities = new PlayerUtilities(player.getUniqueId());
-            total += (int) (0.5 * utilities.getBeacons()) + utilities.getSponge();
-            String level = NumberFormat.getIntegerInstance().format((int) (0.5 * utilities.getBeacons()) + utilities.getSponge());
-            lore.add(Util.color("&c&l" + player.getName()) + Util.color("&e&l - ") + level);
+        if (owners.size() > 0) {
+            lore.add(Util.color("&8» &c&lOwner &8«"));
+            for (UUID uuid : owners) {
+                OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
+                PlayerUtilities playerUtilities = new PlayerUtilities(uuid);
+                int beacons = playerUtilities.getBeacons();
+                int sponge = playerUtilities.getSponge();
+                totalBeacons += beacons;
+                totalSponge += sponge;
+                lore.add(Util.color("&c&l" + player.getName() + "&r&8: &a&l" +
+                    Util.addCommas((int) (beacons * 0.5) + sponge) + " &r&8(&b&lB: &f" + Util.addCommas(beacons) + " &8/ &e&lS: &r&f" + Util.addCommas(sponge) + "&r&8)"));
+            }
+        }
+
+        if (operators.size() > 0) {
+            lore.add(" ");
+            lore.add(Util.color("&8» &e&lOperators &8«"));
+            for (UUID uuid : operators) {
+                OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
+                PlayerUtilities playerUtilities = new PlayerUtilities(uuid);
+                int beacons = playerUtilities.getBeacons();
+                int sponge = playerUtilities.getSponge();
+                totalBeacons += beacons;
+                totalSponge += sponge;
+                lore.add(Util.color("&e&l" + player.getName() + "&r&8: &a&l" +
+                        Util.addCommas((int) (beacons * 0.5) + sponge) + " &r&8(&b&lB: &f" + Util.addCommas(beacons) + " &8/ &e&lS: &r&f" + Util.addCommas(sponge) + "&r&8)"));
+            }
+        }
+
+        if (members.size() > 0) {
+            lore.add(" ");
+            lore.add(Util.color("&8» &d&lMembers &8«"));
+            for (UUID uuid : members) {
+                OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
+                PlayerUtilities playerUtilities = new PlayerUtilities(uuid);
+                int beacons = playerUtilities.getBeacons();
+                int sponge = playerUtilities.getSponge();
+                totalBeacons += beacons;
+                totalSponge += sponge;
+                lore.add(Util.color("&d&l" + player.getName() + "&r&8: &a&l" +
+                        Util.addCommas((int) (beacons * 0.5) + sponge) + " &r&8(&b&lB: &f" + Util.addCommas(beacons) + " &8/ &e&lS: &r&f" + Util.addCommas(sponge) + "&r&8)"));
+            }
         }
 
         lore.add(" ");
-        lore.add(Util.color("&c&lTotal: " + Util.color("&e&l" + NumberFormat.getIntegerInstance().format(total))));
+        lore.add(Util.color("&b&lTotal Beacons&r&8: &b&l" + Util.addCommas(totalBeacons)));
+        lore.add(Util.color("&e&lTotal Sponge&r&8: &e&l" + Util.addCommas(totalSponge)));
+        lore.add(" ");
+        lore.add(Util.color("&b&n&lTotal Cell Value:&r &b&l" + Util.addCommas(((int) (0.5 * totalBeacons) + totalSponge))));
+
         return lore;
     }
-
 }
+
