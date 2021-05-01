@@ -4,11 +4,13 @@ import net.casheh.celllevel.CellLevel;
 import net.casheh.celllevel.nbt.NBTEditor;
 import net.casheh.celllevel.util.Util;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Config {
@@ -97,6 +99,7 @@ public class Config {
         wand.setItemMeta(wandMeta);
         wand = NBTEditor.set(wand, true,"beaconWand");
         wand = NBTEditor.set(wand, uses, "usesLeft");
+        wand.addUnsafeEnchantment(Enchantment.DURABILITY, 999);
         return wand;
     }
 

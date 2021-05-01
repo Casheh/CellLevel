@@ -128,7 +128,7 @@ public class CellTopMenu {
         List<Island> topIslands = new ArrayList<>();
         try {
 
-            String query = "SELECT * FROM virtual ORDER BY 0.5 * beacons + sponge DESC LIMIT 10";
+            String query = "SELECT * FROM virtual ORDER BY 0.5 * beacons + sponge DESC";
             PreparedStatement statement = CellLevel.inst.getDatabase().prepare(query);
             ResultSet rs = statement.executeQuery();
 
